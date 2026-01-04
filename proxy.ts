@@ -1,18 +1,42 @@
-import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
+import { NextRequest, NextResponse } from 'next/server';
+import { checkSessionServer } from '@/lib/api/serverApi';
 
 const PRIVATE_ROUTES = ['/profile', '/notes'];
 const AUTH_ROUTES = ['/sign-in', '/sign-up'];
 
-export function proxy(pathname: string) {
-    const cookieStore = cookies();
-    const hasSession = cookieStore.has('session');
+export async function proxy(request: NextRequest) {
+    const { pathname } = request.nextUrl;
 
-    if (!hasSession && PRIVATE_ROUTES.some(route => pathname.startsWith(route))) {
-        redirect('/sign-in');
+    const accessToken = request.cookies.get('accessToken')?.value;
+    const refreshToken = request.cookies.get('refreshToken')?.value;
+
+    let isAuthenticated = Boolean(accessToken);
+
+
+    if (!accessToken && refreshToken) {
+        try {
+            await checkSessionServer();
+            isAuthenticated = true;
+        } catch {
+            isAuthenticated = false;
+        }
     }
 
-    if (hasSession && AUTH_ROUTES.includes(pathname)) {
-        redirect('/profile');
+
+    if (
+        !isAuthenticated &&
+        PRIVATE_ROUTES.some(route => pathname.startsWith(route))
+    ) {
+        return NextResponse.redirect(new URL('/sign-in', request.url));
     }
+
+
+    if (
+        isAuthenticated &&
+        AUTH_ROUTES.some(route => pathname.startsWith(route))
+    ) {
+        return NextResponse.redirect(new URL('/', request.url));
+    }
+
+    return NextResponse.next();
 }
