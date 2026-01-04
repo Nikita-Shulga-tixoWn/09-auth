@@ -6,7 +6,7 @@ function Footer() {
       <div className={css.content}>
         <p>© {new Date().getFullYear()} NoteHub. All rights reserved.</p>
         <div className={css.wrap}>
-          <p>Developer: Romanna Brych</p>
+          <p>Developer Nikita Shulga "Slar4ik"</p>
           <p>
             Contact us:
             <a href="mailto:romannabric@gmail.com"> romannabric@gmail.com</a>
