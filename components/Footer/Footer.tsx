@@ -9,7 +9,7 @@ function Footer() {
           <p>Developer Nikita Shulga "Slar4ik"</p>
           <p>
             Contact us:
-            <a href="mailto:romannabric@gmail.com"> romannabric@gmail.com</a>
+            <a href="mailto:nikitashulga1996@gmail.com"> nikitashulga1996@gmail.com</a>
           </p>
         </div>
       </div>

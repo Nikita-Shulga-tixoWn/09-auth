@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import css from './Home.module.css';
 import Animated from '@/components/Animated/Animated';
 
@@ -33,18 +32,6 @@ export default function Home() {
               </p>
             </Animated>
           </div>
-
-          <Animated delay={0.1}>
-            <div className={css.heroRight}>
-              <Image
-                src="/hero-illustration.png"
-                alt="Organize your notes visually"
-                fill
-                priority
-                style={{ objectFit: 'contain' }}
-              />
-            </div>
-          </Animated>
         </div>
       </section>
     </main>
