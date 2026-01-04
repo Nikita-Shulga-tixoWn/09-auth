@@ -23,6 +23,7 @@ function EditProfilePage() {
         }
     };
 
+
     return (
         <>
             {user && (
